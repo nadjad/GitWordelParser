@@ -1,0 +1,69 @@
+Operator operator=operators.get($name.text.trim());
+		 	Map<String, Connection> co=new HashMap<String,Connection>();
+		 	if(operator!=null){
+		 		InstantiatedOperator io=new InstantiatedOperator(operator,$id.text);
+		 		/*  deal with the input parameters */
+		 		int i=0;
+		 		for(String s:$in.list){
+			 		s=s.trim();
+		 			Connection toPort;
+		 			Port p=inputPorts.get(s);		 					
+		 			/*if the port name is identified within the input ports of the flow*/
+		 			if(p!=null){
+		 				/* see if a connection to the input port has been allready done*/
+		 				toPort=connections.get(s);
+		 				// search in the uncommitted connections too
+		 				if(toPort==null)
+		 					toPort=co.get(s);
+		 				
+		 				/*if non-existent, create a new connection*/
+		 				if(toPort==null){
+		 					toPort=new Connection(s,null,s,io,operator.getInputPort(i).getName());	 					
+		 				}else{		 						 				
+		 					/* if connection allready existend, simply add a new destination*/
+		 					toPort.addDestination(io,operator.getInputPort(i).getName());
+		 				}	 					
+		 			}else{
+		 				//System.out.println("avem un input care nu si-a gasit port in inputuri:"+s);
+		 				/* if the parameter does not correspond to an input port, search for a connection to another operator*/
+		 				toPort=connections.get(s);
+		 				if(toPort==null)
+		 					toPort=co.get(s);
+		 				/* if non-existent, create a new "hanging" connection with no origin*/
+		 				if(toPort==null){
+		 					toPort=new Connection(s);
+		 				}else{		
+		 					toPort.addDestination(io,operator.getInputPort(i).getName());
+		 				}		 				
+		 			}
+		 			co.put(s,toPort);
+		 			i++;
+		 		}
+		 		/* deal with the output parameters*/
+		 		i=0;
+		 		for(String s:$out.list){
+					s=s.trim();
+		 			Connection toPort;
+		 			/* test to see if the parameter matches an output port name */
+		 			Port p=outputPorts.get(s);	 			
+		 			if(p!=null){		 			
+		 				/* check if there are any connections on this output port */
+			 			toPort=connections.get(s);
+			 			/* if there are none, we can connect */
+		 				if(toPort==null){
+//		 				 System.out.println(">>>>>>>>>>>>>"+s+":"+operator.getOutputPort(i).getName());	
+		 					toPort=new Connection(s,io,operator.getOutputPort(i).getName(),null,s);	 					
+		 				}else{
+		 					/* error */
+		 				}
+		 			}else{
+		 				// if p does not match any output port, we create a connection originating in the 
+		 				// operator port which is left hanging
+		 				toPort=new Connection(s,io,operator.getOutputPort(i).getName(),null,null);		 				
+		 			}
+		 			co.put(s,toPort);
+		 			i++;
+		 		}
+		 		iops.put(io.getIdentifier(),io);
+		 		$op=new Operation(io,co); 		
+		 	}

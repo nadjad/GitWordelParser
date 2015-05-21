@@ -2,26 +2,25 @@ package representation.nodes;
 
 import java.util.List;
 
+import representation.Node;
 import representation.values.Value;
 
 public class Simulation {
 	private String userID;
 	private String simID;
 	private FlowNode flow;
+	private Node node;
 	private List<Value> inputs;
-	private List<Value> outputs;
+	private List<String> outputs;
 
 	public Simulation(String userID, String simID, FlowNode flow,
-			List<Value> inputs, List<Value> outputs) {
-		super();
+			List<Value> inputs, List<String> outputs) {
+		this(flow, inputs, outputs);
 		this.userID = userID;
 		this.simID = simID;
-		this.flow = flow;
-		this.inputs = inputs;
-		this.outputs = outputs;
 	}
 
-	public Simulation(FlowNode flow, List<Value> inputs, List<Value> outputs) {
+	public Simulation(FlowNode flow, List<Value> inputs, List<String> outputs) {
 		super();
 		this.flow = flow;
 		this.inputs = inputs;
@@ -44,7 +43,7 @@ public class Simulation {
 		this.simID = simID;
 	}
 
-	public FlowNode getFlow() {
+	public FlowNode getFlowNode() {
 		return flow;
 	}
 
@@ -52,7 +51,7 @@ public class Simulation {
 		return inputs;
 	}
 
-	public List<Value> getOutputs() {
+	public List<String> getOutputs() {
 		return outputs;
 	}
 

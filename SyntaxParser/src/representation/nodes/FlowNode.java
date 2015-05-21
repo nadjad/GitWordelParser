@@ -44,6 +44,10 @@ public class FlowNode extends Node {
 		this.nodes = new HashMap<String, Node>();
 	}
 
+	public static FlowNode createFlowNode(Operator operator) {
+		return new FlowNode("temp_flow", operator, null, null, null, null);
+	}
+
 	/*************************************** CONSTRUCTORS **************************************/
 
 	public void addNode(Node node) {

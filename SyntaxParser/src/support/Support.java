@@ -32,6 +32,7 @@ public class Support {
 	private Map<String, String> errorMsg = new HashMap<String, String>();
 	// the collection of known (database) operators which can be instantiated
 	private java.util.Map<String, Operator> operators = new java.util.HashMap<String, Operator>();
+	private java.util.Map<String, FlowNode> flowNodes = new java.util.HashMap<String, FlowNode>();
 
 	// flow input ports
 	private java.util.Map<String, Port> inputPorts = new java.util.HashMap<String, Port>();
@@ -221,8 +222,18 @@ public class Support {
 		return new FlowNode(name, flowOp, connections, nodes);
 	}
 
-	public Simulation buildSimulation() {
-		Simulation s = new Simulation("u1", "s1", null, null, null);
+	public void addFlow(FlowNode flow) {
+		this.flowNodes.put(flow.getId(), flow);
+	}
+
+	public Simulation buildSimulation(String simName, String opId,
+			String opName, List<Value> inputVals, List<String> outArgs) {
+		Operator o = operators.get(opName.trim());
+		FlowNode flow = flowNodes.get(opName);
+		Simulation s = null;
+		if (o != null && flow != null)
+			// Node node = new Node(id, ));
+			s = new Simulation("u1", simName, flow, inputVals, outArgs);
 		return s;
 	}
 

@@ -1,0 +1,24 @@
+flow: flow1
+
+  input: a , k : Integer, 
+             s : String
+
+  output: f , kl : Integer
+	
+    [ a ,a ]  Op1:op [ o ]
+    
+    
+	[o] switch (s) 
+	0: [i1]
+	1: [i2]
+	2: [i3]
+
+
+
+end
+
+simulation: ss1
+	[ 56, 89 ] op:oppp [tt, ty]
+	end
+	
+	

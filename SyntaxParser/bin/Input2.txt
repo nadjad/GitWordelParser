@@ -1,0 +1,43 @@
+flow: flow1
+  input: a,k:Integer, 
+             s:String,
+             l:List<Tuple(List<Integer>,String)>,
+             d:List<List<Integer>>
+  output: f,kl:Integer
+	
+    [a,l]  Op1:op1 [n]
+    
+    [s,k,n] Op2:op2 [f,m]
+
+    [t,m,m] Op2:op3 [kl]
+    [t,m,m] Op2:op4 [kll]
+    [t,m,kll] Op2:op5 [kll]
+    [t,m,kll] Op2:op6 [kl]
+    [t,m,kll] Op2:op7 [kl]
+    [t,m,kll] Op2:op8 [kl]
+    [t,m,kll] Op2:op9 [kl]
+end
+
+
+
+flow: flow1
+  input: a,k:Integer, 
+             s:String,
+             l:List<Tuple(List<Integer>,String)>,
+             d:List<List<Integer>>
+  output: f,kl:Integer
+	
+    [ a , l ]  Op1:op1 [ n ]
+    
+    [ s , k , n ] Op2:op2 [ f , m ]
+        
+  /* join(ffff) [u,i] 
+	0: [u,m]
+	1: [i,m]
+	
+	 [u,i] switch     (ffff) 
+	0: [u,m]
+	1: [i,m]
+*/
+  /*  [ t , m , m ] Op2:op3 [ kl ]*/
+end

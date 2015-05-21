@@ -36,6 +36,7 @@ import javax.swing.border.LineBorder;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
+import representation.nodes.ContentNode;
 import representation.nodes.FlowNode;
 import support.CustomErrorListener;
 import support.ErrorRepository;
@@ -136,7 +137,8 @@ public class MainFrame extends JFrame implements ActionListener,
 			WorDeLParser parser = new WorDeLParser(tokens);
 			parser.addErrorListener(new CustomErrorListener());
 			ContentContext result = parser.content();
-			Map<String, FlowNode> aa = result.flows;
+			ContentNode content = result.c;
+			Map<String, FlowNode> aa = content.getFlows();
 			Collection<FlowNode> rr = aa.values();
 			Iterator<FlowNode> i = rr.iterator();
 			canvas.setFlows(rr);

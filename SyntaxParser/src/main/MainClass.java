@@ -14,6 +14,7 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.RecognitionException;
 
+import representation.nodes.ContentNode;
 import representation.nodes.FlowNode;
 import support.CustomErrorListener;
 import support.Error;
@@ -37,7 +38,8 @@ public class MainClass {
 			WorDeLParser parser = new WorDeLParser(tokens);
 			parser.addErrorListener(new CustomErrorListener());
 			ContentContext result = parser.content();
-			Map<String, FlowNode> aa = result.flows;
+			ContentNode content = result.c;
+			Map<String, FlowNode> aa = content.getFlows();
 			// System.out.println("oooooooooooooooooo" + aa.size());
 			// result.
 			System.out.println(result.toStringTree());
