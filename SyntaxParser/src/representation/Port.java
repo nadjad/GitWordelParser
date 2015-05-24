@@ -1,9 +1,14 @@
 package representation;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Port {
+public class Port implements Serializable {
 	private String name;
 	private Type type;
+	private Connection incoming;
+	private List<Connection> outgoing;
 
 	public Port(String name, Type type) {
 		super();
@@ -62,6 +67,24 @@ public class Port {
 		} else if (!type.equals(other.type))
 			return false;
 		return true;
+	}
+
+	public Connection getIncoming() {
+		return incoming;
+	}
+
+	public void setIncoming(Connection incoming) {
+		this.incoming = incoming;
+	}
+
+	public void setOutgoing(List<Connection> outgoing) {
+		this.outgoing = outgoing;
+	}
+
+	public void AddOutgoing(Connection c) {
+		if (this.outgoing == null)
+			this.outgoing = new ArrayList<Connection>();
+		this.outgoing.add(c);
 	}
 
 }

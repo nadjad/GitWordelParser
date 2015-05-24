@@ -1,17 +1,24 @@
 package representation;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class Node {
+public class Node implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected String id;
 	protected Operator operatorType;
-	protected List<Port> inPorts;
-	protected List<Port> outPorts;
+	protected Map<String, Port> inPorts;
+	protected Map<String, Port> outPorts;
+	protected List<Port> iList;
+	protected List<Port> oList;
 	protected Map<String, Connection> inConnections;
 	protected Map<String, Connection> outConnections;
 
@@ -32,9 +39,14 @@ public class Node {
 			this.operatorType = operatorType;
 			this.inPorts = this.operatorType.getInputs();
 			this.outPorts = this.operatorType.getOutputs();
+			this.iList = this.operatorType.getiList();
+			this.oList = this.operatorType.getoList();
 		} else {
-			this.inPorts = new ArrayList<Port>();
-			this.outPorts = new ArrayList<Port>();
+			System.out.println("e null");
+			this.inPorts = new HashMap<String, Port>();
+			this.outPorts = new HashMap<String, Port>();
+			this.iList = new ArrayList<Port>();
+			this.oList = new ArrayList<Port>();
 		}
 		this.inConnections = new HashMap<String, Connection>();
 		this.outConnections = new HashMap<String, Connection>();
@@ -48,11 +60,11 @@ public class Node {
 		return operatorType;
 	}
 
-	public List<Port> getInPorts() {
+	public Map<String, Port> getInPorts() {
 		return inPorts;
 	}
 
-	public List<Port> getOutPorts() {
+	public Map<String, Port> getOutPorts() {
 		return outPorts;
 	}
 
@@ -64,11 +76,11 @@ public class Node {
 		return outConnections;
 	}
 
-	public void addInConnections(Map<String, Connection> inConnections) {
-		Set<String> keys = inConnections.keySet();
-		for (String key : keys)
-			this.inConnections.put(key, inConnections.get(key));
-	}
+	// public void addInConnections(Map<String, Connection> inConnections) {
+	// Set<String> keys = inConnections.keySet();
+	// for (String key : keys)
+	// this.inConnections.put(key, inConnections.get(key));
+	// }
 
 	public void addOutConnections(Map<String, Connection> outConnections) {
 		Set<String> keys = outConnections.keySet();
@@ -77,11 +89,19 @@ public class Node {
 	}
 
 	public void addInConnection(Connection connection) {
-		this.inConnections.put(connection.getConnectionId(), connection);
+		List<ConnectionEnd> destinations = connection.getDestinations();
+		for (ConnectionEnd ce : destinations) {
+			if (ce.getNodeId().equals(this.id)) {
+				this.inConnections.put(ce.getNodePortId(), connection);
+			}
+		}
+		// this.inConnections.put(connection.getConnectionId(), connection);
 	}
 
 	public void addOutConnection(Connection connection) {
-		this.outConnections.put(connection.getConnectionId(), connection);
+		ConnectionEnd origin = connection.getOrigin();
+		this.outConnections.put(origin.getNodePortId(), connection);
+		// this.outConnections.put(connection.getConnectionId(), connection);
 	}
 
 	public Connection getConnection(String connectionName) {
@@ -91,6 +111,12 @@ public class Node {
 		return connection;
 	}
 
+	// public Connection getConnectionByPort(String connectionName) {
+	// Connection connection = this.inConnections.get(connectionName);
+	// if (connection == null)
+	// connection = this.outConnections.get(connectionName);
+	// return connection;
+	// }
 	public Connection getInConnection(String identifier) {
 		return this.inConnections.get(identifier);
 	}
@@ -112,8 +138,9 @@ public class Node {
 		for (String in : inList) {
 			Connection conn = this.inConnections.get(in);
 			if (conn == null) {
-				this.inConnections.put(in, new Connection(in, null,
-						createConnEndforPort(i, true)));
+				this.inConnections
+						.put(this.iList.get(i).getName(), new Connection(in,
+								null, createConnEndforPort(i, true)));
 			} else {
 				conn.addDestination(createConnEndforPort(i, true));
 			}
@@ -122,8 +149,8 @@ public class Node {
 
 		i = 0;
 		for (String out : outList) {
-			this.outConnections.put(out, new Connection(out,
-					createConnEndforPort(i, false)));
+			this.outConnections.put(this.oList.get(i).getName(),
+					new Connection(out, createConnEndforPort(i, false)));
 			i++;
 		}
 	}
@@ -131,10 +158,10 @@ public class Node {
 	private ConnectionEnd createConnEndforPort(int number, boolean in) {
 		ConnectionEnd connEnd;
 		if (in) {
-			connEnd = new ConnectionEnd(this.id, this.inPorts.get(number)
+			connEnd = new ConnectionEnd(this.id, this.iList.get(number)
 					.getName());
 		} else {
-			connEnd = new ConnectionEnd(this.id, this.outPorts.get(number)
+			connEnd = new ConnectionEnd(this.id, this.oList.get(number)
 					.getName());
 		}
 		return connEnd;

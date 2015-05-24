@@ -76,7 +76,8 @@ public class OpReader {
 			for (int i = 0; i < subtypes.length; i++) {
 				subtpList.add(extractType(subtypes[i]));
 			}
-			return representation.types.CompositeType.getInstance("Tuple", subtpList);
+			return representation.types.CompositeType.getInstance("Tuple",
+					subtpList);
 		} else if (TYPES_LIST.contains(text)) {
 			return representation.types.BaseType.getInstance(text);
 		} else {

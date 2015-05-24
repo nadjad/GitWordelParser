@@ -1,11 +1,12 @@
 package representation.nodes;
 
+import java.io.Serializable;
 import java.util.List;
 
 import representation.Node;
 import representation.values.Value;
 
-public class Simulation {
+public class Simulation implements Serializable {
 	private String userID;
 	private String simID;
 	private FlowNode flow;

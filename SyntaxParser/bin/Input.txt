@@ -1,5 +1,36 @@
 flow: flow1
 
+  input: a22 : String
+
+  output: ore ,ort: String
+	
+    [ a22 ] opp1:o1 [be ]
+    [ be ] opp2:o2 [ ore ]
+    [ be ] opp2:o3 [ ort ]
+
+end
+
+
+simulation: ss1
+	["asdf"] flow1:ff [result,ui]
+end
+/*flow: flow1
+
+  input: a : String
+
+  output: o : String
+	
+    [ a ] opp1:o1 [b ]
+    [ b ] opp2:o2 [ o ]
+
+end
+
+
+simulation: ss1
+	["asdf"] flow1:ff [result]
+	end*/
+/*flow: flow1
+
   input: a , k : Integer, 
              s : String
 
@@ -15,10 +46,4 @@ flow: flow1
 
 
 
-end
-
-simulation: ss1
-	[ 56, 89 ] op:oppp [tt, ty]
-	end
-	
-	
+end*/

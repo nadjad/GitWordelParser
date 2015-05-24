@@ -46,4 +46,23 @@
 	        <output name="d" type="Integer"></output>
 	    </outputs>  
 	</operator>
+	
+	<operator name="opp1">       
+	    <inputs>
+	        <input name="a" type="String"></input>
+	    </inputs>	    
+	    <outputs>
+	        <output name="b" type="String"></output>
+	    </outputs>  
+	</operator>
+	
+	<operator name="opp1">       
+	    <inputs>
+	        <input name="a" type="String"></input>
+	    </inputs>
+	    <outputs>
+	        <output name="b" type="String"></output>
+	    </outputs>  
+	</operator>
+	
 </operators>

@@ -44,6 +44,8 @@ public class MainClass {
 			// result.
 			System.out.println(result.toStringTree());
 
+			System.out.println("------------");
+			System.out.println(content.getSimulation());
 			/* test the error repository */
 			List<Error> errors = ErrorRepository.getErrorList();
 			for (Error e : errors) {

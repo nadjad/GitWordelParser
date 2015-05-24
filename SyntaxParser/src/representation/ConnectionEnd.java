@@ -1,6 +1,8 @@
 package representation;
 
-public class ConnectionEnd {
+import java.io.Serializable;
+
+public class ConnectionEnd implements Serializable {
 
 	private String NodeId;
 	private String NodePortId;

@@ -1,8 +1,9 @@
 package representation.nodes;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class ContentNode {
+public class ContentNode implements Serializable {
 
 	private Map<String, FlowNode> flows;
 	private Simulation simulation;

@@ -1,9 +1,10 @@
 package representation;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Connection {
+public class Connection implements Serializable {
 
 	private String connectionId;
 	private ConnectionEnd origin;

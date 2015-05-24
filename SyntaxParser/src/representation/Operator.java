@@ -2,26 +2,35 @@ package representation;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Operator implements Serializable {
 
 	protected String name;
-	protected List<Port> inputs;
-	protected List<Port> outputs;
+	protected Map<String, Port> inputs;
+	protected Map<String, Port> outputs;
+	protected List<Port> iList;
+	protected List<Port> oList;
 
 	public Operator(String name) {
 		super();
 		this.name = name;
-		this.inputs = new ArrayList<Port>();
-		this.outputs = new ArrayList<Port>();
+		this.inputs = new HashMap<String, Port>();
+		this.outputs = new HashMap<String, Port>();
+		this.iList = new ArrayList<Port>();
+		this.oList = new ArrayList<Port>();
 	}
 
 	public Operator(String name, List<Port> inputs, List<Port> outputs) {
-		super();
-		this.name = name;
-		this.inputs = inputs;
-		this.outputs = outputs;
+		this(name);
+		for (Port p : inputs)
+			this.inputs.put(p.getName(), p);
+		for (Port p : outputs)
+			this.outputs.put(p.getName(), p);
+		this.iList = inputs;
+		this.oList = outputs;
 	}
 
 	public String getName() {
@@ -32,15 +41,15 @@ public class Operator implements Serializable {
 		this.name = name;
 	}
 
-	public List<Port> getInputs() {
+	public Map<String, Port> getInputs() {
 		return inputs;
 	}
 
-	public void setInputs(List<Port> inputs) {
+	public void setInputs(Map<String, Port> inputs) {
 		this.inputs = inputs;
 	}
 
-	public List<Port> getOutputs() {
+	public Map<String, Port> getOutputs() {
 		return outputs;
 	}
 
@@ -52,20 +61,22 @@ public class Operator implements Serializable {
 		return this.outputs.get(nr);
 	}
 
-	public void setOutputs(List<Port> outputs) {
+	public void setOutputs(Map<String, Port> outputs) {
 		this.outputs = outputs;
+	}
+
+	public List<Port> getiList() {
+		return iList;
+	}
+
+	public List<Port> getoList() {
+		return oList;
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		for (Port p : this.inputs)
-			sb.append(p.toString() + " ");
-		sb.append("\n\t");
-		for (Port p : this.outputs)
-			sb.append(p.toString() + " ");
-		String s = "op:" + this.name + "\n\t" + new String(sb);
-		return s;
+		return "Operator [name=" + name + ", inputs=" + inputs + ", outputs="
+				+ outputs + "]";
 	}
 
 	@Override

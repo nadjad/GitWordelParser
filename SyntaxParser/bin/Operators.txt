@@ -10,3 +10,9 @@ s:Integer
 O:DIFF
 a:Integer b:Integer
 d:Integer
+O:opp1
+a:String
+b:String
+O:opp2
+a:String
+b:String

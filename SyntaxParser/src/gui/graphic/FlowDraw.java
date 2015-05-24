@@ -85,7 +85,7 @@ public class FlowDraw implements Drawable {
 		java.util.Collections.sort(keyList);
 
 		// initialize input ports
-		List<Port> inports = flow.getInPorts();
+		Collection<Port> inports = flow.getInPorts().values();
 		for (Port p : inports) {
 			this.portDraws.add(new PortDraw(x + inPortOffsetX, y
 					+ inPortOffsetY, portSize, portSize, p.getName(), true));
@@ -110,7 +110,7 @@ public class FlowDraw implements Drawable {
 		}
 
 		// initialize output ports
-		List<Port> outports = flow.getOutPorts();
+		Collection<Port> outports = flow.getOutPorts().values();
 		outPortOffsetX = opOffsetX + 50;
 		for (Port p : outports) {
 			this.outportDraws.add(new PortDraw(x + outPortOffsetX, y

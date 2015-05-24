@@ -1,6 +1,6 @@
 package representation.nodes;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +11,7 @@ import representation.values.Value;
 public class JoinNode extends Node {
 
 	private static int numberOfInstances = 0;
-	private Map<Value, List<Port>> branchPorts;
+	private Map<Value, Map<String, Port>> branchPorts;
 
 	public JoinNode(List<String> inPorts) {
 		super("join" + numberOfInstances, null);
@@ -24,10 +24,10 @@ public class JoinNode extends Node {
 		this.branchPorts.put(value, createPorts(portNames));
 	}
 
-	private List<Port> createPorts(List<String> portNames) {
-		List<Port> ports = new ArrayList<Port>();
+	private Map<String, Port> createPorts(List<String> portNames) {
+		Map<String, Port> ports = new HashMap<String, Port>();
 		for (String s : portNames) {
-			ports.add(new Port(s, null));
+			ports.put(s, new Port(s, null));
 		}
 		return ports;
 	}

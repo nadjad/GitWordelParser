@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import representation.Node;
@@ -46,8 +47,8 @@ public class OpDraw implements Drawable {
 
 	private void initialize() {
 		this.representation = new Ellipse2D.Double(x, y, sizeX, sizeY);
-		List<Port> inPorts = type.getInputs();
-		List<Port> outPorts = type.getOutputs();
+		Collection<Port> inPorts = type.getInputs().values();
+		Collection<Port> outPorts = type.getOutputs().values();
 		this.text = type.getName();// + ":" + name;
 
 		inHeight = inPorts.size() * (portHeight + 5);

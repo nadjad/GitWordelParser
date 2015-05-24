@@ -217,9 +217,12 @@ public class Support {
 
 	public FlowNode buildFlow(String name, List<Port> inports,
 			List<Port> outports) {
+
 		Operator flowOp = new Operator(name, inports, outports);
 		this.operators.put(name, flowOp);
-		return new FlowNode(name, flowOp, connections, nodes);
+		FlowNode flow = new FlowNode(name, flowOp, connections, nodes);
+		addFlow(flow);
+		return flow;
 	}
 
 	public void addFlow(FlowNode flow) {
@@ -228,9 +231,10 @@ public class Support {
 
 	public Simulation buildSimulation(String simName, String opId,
 			String opName, List<Value> inputVals, List<String> outArgs) {
-		Operator o = operators.get(opName.trim());
-		FlowNode flow = flowNodes.get(opName);
+		Operator o = operators.get(opId.trim());
+		FlowNode flow = flowNodes.get(opId.trim());
 		Simulation s = null;
+		System.out.println("*************" + opId + "pppp:" + flow);
 		if (o != null && flow != null)
 			// Node node = new Node(id, ));
 			s = new Simulation("u1", simName, flow, inputVals, outArgs);
